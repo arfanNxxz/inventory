@@ -1,0 +1,49 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
+
+class StoreItemRequest extends FormRequest
+{
+    public function authorize()
+    {
+        return true;
+    }
+
+    public function rules()
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'quantity' => 'required|integer|min:0',
+            'price' => 'required|numeric|min:0',
+            'category_id' => 'required|exists:categories,id',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Nama item wajib diisi.',
+            'quantity.integer' => 'Jumlah harus angka bulat.',
+            'quantity.min' => 'Jumlah tidak boleh negatif.',
+            'price.numeric' => 'Harga harus berupa angka.',
+            'category_id.exists' => 'Kategori tidak ditemukan.',
+        ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+
+            response()->json([
+                'status' => 'error',
+                'data' => null,
+                'message' => $validator->errors()->first()
+            ], 422)
+
+        );
+    }
+}
