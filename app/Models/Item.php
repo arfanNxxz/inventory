@@ -8,7 +8,7 @@ class Item extends Model
 {
     protected $fillable = [
         'name',
-        'stock',
+        'quantity',
         'price',
         'category_id'
     ];
