@@ -34,3 +34,7 @@ GET /api/v1/items?category_id={id}
 
 Description:
 Filter items by category.
+
+## Catatan Validasi
+
+Parameter category_id harus berupa angka integer yang valid.
