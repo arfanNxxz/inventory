@@ -23,3 +23,14 @@ POST /items { name, quantity, price, category_id }
 GET /items/{id}
 PUT /items/{id}
 DELETE /items/{id} (admin only)
+
+## GET /api/v1/items
+
+Mengambil seluruh item.
+
+### Filter berdasarkan kategori
+
+GET /api/v1/items?category_id={id}
+
+Description:
+Filter items by category.

@@ -6,6 +6,7 @@ use App\Http\Requests\StoreItemRequest;
 use App\Http\Requests\UpdateItemRequest;
 use App\Services\ItemService;
 use App\Http\Controllers\Api\BaseController;
+use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Http\JsonResponse;
 
@@ -19,13 +20,20 @@ class ItemController extends BaseController
         $this->svc = $svc;
     }
 
-    public function index(): JsonResponse
-    {
-        return $this->success(
-            $this->svc->all(),
-            'Berhasil menarik semua data Item'
+    public function index(Request $request)
+{
+    $items = $this->svc
+        ->all()
+        ->filter(fn($item) =>
+            !$request->category_id
+            || $item->category_id == $request->category_id
         );
-    }
+
+    return $this->success(
+        $items,
+        'Berhasil mengambil data item'
+    );
+}
 
     public function store(StoreItemRequest $req): JsonResponse
     {
