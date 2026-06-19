@@ -34,3 +34,7 @@ GET /api/v1/items?category_id={id}
 
 Description:
 Filter items by category.
+
+## Catatan
+
+Endpoint mendukung filter category_id.
